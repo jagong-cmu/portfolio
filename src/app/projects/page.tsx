@@ -7,6 +7,9 @@ export const metadata: Metadata = {
   description: "Selected software and design work.",
 };
 
+// Reads the database at request time — don't statically prerender at build.
+export const dynamic = "force-dynamic";
+
 // Server Component — reads the database directly, no useEffect or loading state.
 export default async function ProjectsPage() {
   const rows = await prisma.project.findMany({
