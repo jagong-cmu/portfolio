@@ -1,0 +1,33 @@
+---
+title: "Schemas Are Sentences"
+date: "2026-03-03"
+excerpt: "A good data model reads like a clear sentence: subjects, verbs, and relationships you can say out loud. When the schema is hard to narrate, the product usually is too."
+published: true
+---
+
+Here's a test I use on any data model: try to say it out loud as a sentence.
+
+> A **user** writes many **posts**. A **post** belongs to one user and has many
+> **comments**.
+
+If that narration is smooth, the schema is probably sound. If you find yourself
+saying "well, sort of, except when..." — that hesitation is a design smell, and
+it almost always shows up later as a confusing feature.
+
+## Nouns are tables, verbs are relationships
+
+Most of modeling is just naming things honestly:
+
+- The **nouns** in your sentence become tables.
+- The **verbs** become foreign keys and join tables.
+- The **adjectives** become columns.
+
+When a table is hard to name, it usually means it's doing two jobs at once.
+Split it until each table is a noun you'd actually use in conversation.
+
+## The product inherits the schema
+
+Users never see your database, but they feel it. A muddy data model leaks out
+as muddy navigation, ambiguous states, and features that *almost* work. Clean up
+the sentence, and the product gets easier to explain — to your users and to
+yourself.
