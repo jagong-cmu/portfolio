@@ -10,19 +10,19 @@ const links = [
 
 export default function Nav() {
   return (
-    <nav className="flex items-center justify-between gap-4 border-b border-border bg-background/80 px-6 py-5 backdrop-blur md:px-10">
+    <nav className="sticky top-0 z-40 flex items-center justify-between gap-4 border-t-4 border-b-2 border-t-accent border-b-foreground bg-background px-6 py-4 md:px-10">
       <Link
         href="/"
-        className="shrink-0 font-mono text-sm uppercase tracking-widest text-foreground"
+        className="shrink-0 font-mono text-sm font-bold uppercase tracking-widest text-foreground"
       >
         Portfolio
       </Link>
-      <div className="flex gap-4 sm:gap-8">
+      <div className="flex gap-1 sm:gap-2">
         {links.map(({ href, label }) => (
           <Link
             key={href}
             href={href}
-            className="font-mono text-xs uppercase tracking-wider text-muted transition-colors hover:text-accent sm:text-sm sm:normal-case sm:tracking-normal"
+            className="px-2 py-1 font-mono text-xs uppercase tracking-wider text-foreground transition-colors hover:bg-foreground hover:text-background sm:text-sm"
           >
             {label}
           </Link>

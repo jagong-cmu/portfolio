@@ -1,29 +1,41 @@
 import Button from "@/components/Button";
+import SystemBar from "@/components/SystemBar";
+import ParallaxProvider from "@/components/parallax/ParallaxProvider";
+import MouseParallax from "@/components/parallax/MouseParallax";
+import Marquee from "@/components/parallax/Marquee";
+
+const ticker = [
+  "Software Engineer",
+  "Designer",
+  "Carnegie Mellon",
+  "TypeScript",
+  "React",
+  "Next.js",
+  "Open to work",
+];
 
 export default function Home() {
   return (
-    <main className="flex flex-1 flex-col">
-      {/* Document-header strip — the audit/dossier signature */}
-      <div className="mx-auto w-full max-w-wide px-6 md:px-10">
-        <div className="flex items-center justify-between border-b border-border py-4 font-mono text-xs uppercase tracking-widest text-subtle">
-          <span>Portfolio — 2026</span>
-          <span>Carnegie Mellon</span>
-        </div>
-      </div>
+    <main className="mx-auto flex w-full max-w-wide flex-1 flex-col px-6 md:px-10">
+      <SystemBar left="Portfolio — 2026" right="Carnegie Mellon" />
 
-      {/* Hero */}
-      <section className="mx-auto flex w-full max-w-wide flex-1 flex-col justify-center px-6 py-section md:px-10">
-        <p className="font-mono text-xs uppercase tracking-[0.25em] text-accent">
-          Software Engineer · Designer
-        </p>
+      {/* Hero — mouse parallax layers (grid lives globally in the layout) */}
+      <ParallaxProvider className="relative flex flex-1 flex-col justify-center py-section">
+        <MouseParallax factor={8}>
+          <p className="font-mono text-xs font-bold uppercase tracking-[0.3em] text-accent">
+            Software Engineer · Designer
+          </p>
+        </MouseParallax>
 
-        <h1 className="mt-6 text-6xl font-semibold leading-[0.95] tracking-tight text-foreground sm:text-7xl md:text-8xl">
-          Jonathan
-          <br />
-          Gong
-        </h1>
+        <MouseParallax factor={16}>
+          <h1 className="mt-6 font-display text-5xl font-extrabold uppercase leading-[0.85] tracking-tighter text-foreground sm:text-7xl md:text-8xl lg:text-9xl">
+            Jonathan
+            <br />
+            <span className="text-outline">Gong</span>
+          </h1>
+        </MouseParallax>
 
-        <p className="mt-10 max-w-content text-xl leading-relaxed text-muted md:text-2xl">
+        <p className="mt-10 max-w-content text-xl leading-snug text-muted md:text-2xl">
           I build careful software — the kind where the details are the point,
           not a polish pass at the end.
         </p>
@@ -31,7 +43,12 @@ export default function Home() {
         <div className="mt-12">
           <Button href="/projects">View work</Button>
         </div>
-      </section>
+      </ParallaxProvider>
+
+      {/* Ticker — full-bleed marquee */}
+      <div className="-mx-6 border-y-2 border-foreground py-3 md:-mx-10">
+        <Marquee items={ticker} durationSec={28} />
+      </div>
     </main>
   );
 }

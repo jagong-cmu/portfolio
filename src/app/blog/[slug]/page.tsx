@@ -6,6 +6,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { prisma } from "@/lib/prisma";
 import { readingTimeMinutes } from "@/lib/reading-time";
+import SystemBar from "@/components/SystemBar";
 
 export const dynamic = "force-dynamic";
 
@@ -41,32 +42,31 @@ export default async function PostPage({ params }: Params) {
 
   return (
     <main className="mx-auto w-full max-w-content flex-1 px-6 md:px-10">
-      {/* Document-header strip */}
-      <div className="flex items-center justify-between border-b border-border py-4 font-mono text-xs uppercase tracking-widest text-subtle">
-        <Link href="/blog" className="transition-colors hover:text-accent">
-          ← Blog
-        </Link>
-        <span>{format(date, "yyyy")}</span>
-      </div>
+      <SystemBar
+        left={
+          <Link href="/blog" className="transition-colors hover:text-accent">
+            ← Blog
+          </Link>
+        }
+        right={format(date, "yyyy")}
+      />
 
       {/* Article header */}
       <header className="py-section pb-10">
-        <div className="font-mono text-xs uppercase tracking-widest text-subtle">
+        <div className="font-mono text-xs font-bold uppercase tracking-widest text-subtle">
           <time dateTime={date.toISOString()}>
             {format(date, "MMMM d, yyyy")}
           </time>
           <span> · {readingTime} min read</span>
         </div>
-        <h1 className="mt-5 text-4xl font-semibold leading-tight tracking-tight text-foreground md:text-5xl">
+        <h1 className="mt-5 font-display text-4xl font-extrabold leading-[0.95] tracking-tight text-foreground md:text-6xl">
           {post.title}
         </h1>
-        <p className="mt-6 text-xl leading-relaxed text-muted">
-          {post.excerpt}
-        </p>
+        <p className="mt-6 text-xl leading-snug text-muted">{post.excerpt}</p>
       </header>
 
       {/* Body */}
-      <article className="prose max-w-none pb-section prose-headings:font-semibold prose-headings:tracking-tight prose-pre:rounded-lg prose-pre:border prose-pre:border-border">
+      <article className="prose max-w-none pb-section prose-headings:font-extrabold prose-headings:uppercase prose-headings:tracking-tight prose-pre:rounded-none prose-pre:border-2 prose-pre:border-foreground">
         <ReactMarkdown remarkPlugins={[remarkGfm]}>{post.content}</ReactMarkdown>
       </article>
     </main>

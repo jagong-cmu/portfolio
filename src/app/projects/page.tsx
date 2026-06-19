@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import ProjectCard, { type Project } from "@/components/ProjectCard";
+import SystemBar from "@/components/SystemBar";
+import ParallaxProvider from "@/components/parallax/ParallaxProvider";
+import ScrollParallax from "@/components/parallax/ScrollParallax";
 import { prisma } from "@/lib/prisma";
 
 export const metadata: Metadata = {
@@ -28,27 +31,37 @@ export default async function ProjectsPage() {
 
   return (
     <main className="mx-auto w-full max-w-wide flex-1 px-6 md:px-10">
-      {/* Document-header strip */}
-      <div className="flex items-center justify-between border-b border-border py-4 font-mono text-xs uppercase tracking-widest text-subtle">
-        <span>Projects</span>
-        <span>{String(projects.length).padStart(2, "0")} entries</span>
-      </div>
+      <SystemBar
+        left="Projects"
+        right={`${String(projects.length).padStart(2, "0")} entries`}
+      />
 
-      <header className="py-section pb-12">
-        <h1 className="text-5xl font-semibold tracking-tight text-foreground md:text-6xl">
-          Selected work
-        </h1>
-        <p className="mt-6 max-w-content text-xl leading-relaxed text-muted">
-          A short catalog of things I&apos;ve designed and built — tools I
-          wanted to exist, made carefully.
-        </p>
-      </header>
+      <ParallaxProvider>
+        <header className="py-section pb-12">
+          <ScrollParallax speed={0.12} clamp={60}>
+            <h1 className="font-display text-5xl font-extrabold uppercase tracking-tighter text-foreground sm:text-6xl md:text-8xl">
+              Selected work
+            </h1>
+          </ScrollParallax>
+          <p className="mt-6 max-w-content text-xl leading-snug text-muted">
+            A short catalog of things I&apos;ve designed and built — tools I
+            wanted to exist, made carefully.
+          </p>
+        </header>
 
-      <div className="grid gap-6 pb-section sm:grid-cols-2 lg:grid-cols-3">
-        {projects.map((project, i) => (
-          <ProjectCard key={project.title} index={i + 1} {...project} />
-        ))}
-      </div>
+        <div className="grid gap-6 pb-section sm:grid-cols-2 lg:grid-cols-3">
+          {projects.map((project, i) => (
+            <ScrollParallax
+              key={project.title}
+              speed={0.04 + (i % 3) * 0.035}
+              clamp={40}
+              className="h-full"
+            >
+              <ProjectCard index={i + 1} {...project} />
+            </ScrollParallax>
+          ))}
+        </div>
+      </ParallaxProvider>
     </main>
   );
 }

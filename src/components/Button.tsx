@@ -1,19 +1,21 @@
 import Link from "next/link";
 import type { ComponentProps, ReactNode } from "react";
 
-type Variant = "primary" | "secondary";
+type Variant = "primary" | "secondary" | "accent";
 
 const base =
-  "group inline-flex items-center justify-center gap-2 rounded-md font-mono text-xs uppercase tracking-widest " +
-  "px-5 py-3 transition-colors duration-150 select-none " +
+  "group inline-flex items-center justify-center gap-2 border-2 border-foreground " +
+  "font-mono text-xs font-bold uppercase tracking-widest px-5 py-3 select-none " +
+  "shadow-brutal transition-[transform,box-shadow,background-color,color] duration-100 " +
+  "hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-brutal-lg " +
+  "active:translate-x-0 active:translate-y-0 active:shadow-brutal-sm " +
   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background " +
-  "disabled:pointer-events-none disabled:opacity-50";
+  "disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none";
 
 const variants: Record<Variant, string> = {
-  primary:
-    "bg-accent text-accent-foreground hover:bg-accent-hover shadow-sm hover:shadow-md",
-  secondary:
-    "border border-border bg-transparent text-foreground hover:border-accent hover:text-accent",
+  primary: "bg-foreground text-background",
+  secondary: "bg-transparent text-foreground",
+  accent: "bg-accent text-accent-foreground",
 };
 
 function cx(...parts: (string | false | undefined)[]) {

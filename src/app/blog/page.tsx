@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { prisma } from "@/lib/prisma";
 import { readingTimeMinutes } from "@/lib/reading-time";
 import BlogPostCard, { type BlogPostCardData } from "@/components/BlogPostCard";
+import SystemBar from "@/components/SystemBar";
+import ParallaxProvider from "@/components/parallax/ParallaxProvider";
+import ScrollParallax from "@/components/parallax/ScrollParallax";
 
 export const metadata: Metadata = {
   title: "Blog",
@@ -27,30 +30,35 @@ export default async function BlogPage() {
 
   return (
     <main className="mx-auto w-full max-w-wide flex-1 px-6 md:px-10">
-      {/* Document-header strip */}
-      <div className="flex items-center justify-between border-b border-border py-4 font-mono text-xs uppercase tracking-widest text-subtle">
-        <span>Blog</span>
-        <span>{String(published.length).padStart(2, "0")} entries</span>
-      </div>
+      <SystemBar
+        left="Blog"
+        right={`${String(published.length).padStart(2, "0")} entries`}
+      />
 
-      <header className="py-section pb-12">
-        <h1 className="text-5xl font-semibold tracking-tight text-foreground md:text-6xl">
-          Writing
-        </h1>
-        <p className="mt-6 max-w-content text-xl leading-relaxed text-muted">
-          Notes on software, design, and the space between them.
-        </p>
-      </header>
-
-      <div className="pb-section">
-        {published.length === 0 ? (
-          <p className="border-t border-border py-8 text-muted">
-            No posts published yet — check back soon.
+      <ParallaxProvider>
+        <header className="py-section pb-12">
+          <ScrollParallax speed={0.12} clamp={60}>
+            <h1 className="font-display text-5xl font-extrabold uppercase tracking-tighter text-foreground sm:text-6xl md:text-8xl">
+              Writing
+            </h1>
+          </ScrollParallax>
+          <p className="mt-6 max-w-content text-xl leading-snug text-muted">
+            Notes on software, design, and the space between them.
           </p>
-        ) : (
-          published.map((post) => <BlogPostCard key={post.slug} post={post} />)
-        )}
-      </div>
+        </header>
+
+        <div className="pb-section">
+          {published.length === 0 ? (
+            <p className="border-t-2 border-foreground py-8 text-muted">
+              No posts published yet — check back soon.
+            </p>
+          ) : (
+            published.map((post) => (
+              <BlogPostCard key={post.slug} post={post} />
+            ))
+          )}
+        </div>
+      </ParallaxProvider>
     </main>
   );
 }
